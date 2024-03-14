@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block content %}    
+    <form action="/logout" method="POST" id="logout">
+        <button>Logout</button>
+    </form>
+
+    <a href="/index">Back</a>
+
+    {% for msg in get_flashed_messages() %}
+    <h1>{{ msg }}</h1>
+    {% endfor %}
+    
+    {% if team %}
+    <table>
+        <tr>
+            <th>Team Name</th>
+            <th>Year</th>
+            <th>Wins</th>
+            <th>Losses</th>
+            <th>Win %</th>
+            <th>Games Behind</th>
+            <th>Runs</th>
+            <th>WC Standing</th>
+        </tr>
+        {% for item in data %}
+            {% if item.team_name == team.team_name %}
+                <tr bgcolor="yellow">
+            {% else %}
+                <tr>
+            {% endif %}
+            <td>{{ item.team_name }}</td>
+            <td>{{ item.year }}</td>
+            <td>{{ item.wins }}</td>
+            <td>{{ item.losses }}</td>
+            <td>{{ item.win_percent }}</td>
+            <td>{{ item.games_behind }}</td>
+            <td>{{ item.runs }}</td>
+            <td>{{ item.wc_standing }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% if playoff_data|length > 0 %}
+    <h1>Team Playoffs</h1>
+    <table>
+        <tr>
+            <th>Winner</th>
+            <th>Loser</th>
+            <th>Round</th>
+        </tr>
+        {% for playoff in playoff_data %}
+            <td>{{ playoff[0] }}</td>
+            <td>{{ playoff[1] }}</td>
+            <td>{{ playoff[2] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %}
+    
+    {% endif %}
+{% endblock %}

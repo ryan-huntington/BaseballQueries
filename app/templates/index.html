@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block content %}
+<form action="/logout" method="POST" id="logout">
+    <button>Logout</button>
+</form>
+
+<form id="standings" method="GET" action="/standing">
+    <select name="team" id="team" form="standings">
+        {% for team in teams %}
+        <option value="{{ team }}">{{ team }}</option>
+        {% endfor %}
+    </select>
+    <select name="year" id="year" form="standings">
+        {% for year in years %}
+        <option value="{{ year }}">{{ year }}</option>
+        {% endfor %}
+    </select>
+
+    <br />
+    <input type="submit" value="Get Standing" />
+</form>
+
+{% if users|length > 0 %}
+<h1>Users</h1>
+<table>
+    <tr>
+        <th>Username</th>
+        <th>Password Hash</th>
+        <th>Admin?</th>
+    </tr>
+    {% for user in users %}
+    <tr>
+        <td>{{ user.username }}</td>
+        <td>{{ user.password_hash }}</td>
+        <td>{{ user.is_admin }}</td>
+    </tr>
+    {% endfor %}
+</table>
+<h1>Log:</h1>
+<table>
+    {% for log in log_data %}
+    <tr>
+        <td>{{ log.content }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+{% endif %} {% endblock %}
